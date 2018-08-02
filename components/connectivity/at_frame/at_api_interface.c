@@ -34,6 +34,8 @@
 
 #if defined(WITH_AT_FRAMEWORK)
 #include "at_api_interface.h"
+#include "atadapter.h"
+
 
 static at_adaptor_api  *gp_at_adaptor_api = NULL;
 
@@ -47,12 +49,12 @@ int32_t at_api_register(at_adaptor_api *api)
 	{
 		return gp_at_adaptor_api->init();
 	}
-	return -1;
+	return AT_FAILED;
 }
 
 int32_t at_api_connect(const char* host, const char* port, int proto)
 {
-    int32_t ret = -1;
+    int32_t ret = AT_FAILED;
 
 	if (gp_at_adaptor_api && gp_at_adaptor_api->connect)
 	{
@@ -67,7 +69,7 @@ int32_t at_api_send(int32_t id , const unsigned char* buf, uint32_t len)
 	{
 		return gp_at_adaptor_api->send(id, buf, len);
 	}
-	return -1;
+	return AT_FAILED;
 }
 
 int32_t at_api_recv(int32_t id, unsigned char* buf, size_t len)
@@ -76,7 +78,7 @@ int32_t at_api_recv(int32_t id, unsigned char* buf, size_t len)
 	{
 		return gp_at_adaptor_api->recv(id, buf, len);
 	}
-	return -1;
+	return AT_FAILED;
 }
 
 int32_t at_api_recv_timeout(int32_t id, unsigned char* buf, size_t len, uint32_t timeout)
@@ -85,7 +87,7 @@ int32_t at_api_recv_timeout(int32_t id, unsigned char* buf, size_t len, uint32_t
 	{
 		return gp_at_adaptor_api->recv_timeout(id, buf, len, timeout);
 	}
-	return -1;
+	return AT_FAILED;
 }
 
 int32_t at_api_close(int32_t fd)
@@ -94,7 +96,7 @@ int32_t at_api_close(int32_t fd)
 	{
 		return gp_at_adaptor_api->close(fd);
 	}
-	return -1;
+	return AT_FAILED;
 }
 
 #endif
